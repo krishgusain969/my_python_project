@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Items - Lost & Found Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard-header">
+            <h1>Browse Approved Items 🔍</h1>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">← Back to Dashboard</a>
+        </div>
+        
+        {% if items %}
+            <div class="items-grid">
+                {% for item in items %}
+                    <div class="item-card status-{{ item.status }}">
+                        <div class="item-header">
+                            <span class="item-type">{{ item.type|upper }}</span>
+                            <span class="item-status status-{{ item.status }}">APPROVED</span>
+                        </div>
+                        <h3>{{ item.item_name }}</h3>
+                        <div class="item-details">
+                            <p><strong>Color:</strong> {{ item.color }}</p>
+                            <p><strong>Location:</strong> {{ item.location }}</p>
+                            {% if item.description %}
+                                <p><strong>Description:</strong> {{ item.description }}</p>
+                            {% endif %}
+                            <p><strong>Reported by:</strong> {{ item.reported_by }}</p>
+                            <p><strong>Date:</strong> {{ item.date }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="no-items">No approved items available yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+

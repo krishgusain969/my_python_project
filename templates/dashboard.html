@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Lost & Found Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard-header">
+            <h1>Welcome, {{ username }}! 👋</h1>
+            <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+        </div>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="action-cards">
+            <a href="{{ url_for('report_lost') }}" class="action-card lost-card">
+                <div class="card-icon">🔴</div>
+                <h2>Report Lost Item</h2>
+                <p>Report an item you've lost</p>
+            </a>
+            
+            <a href="{{ url_for('report_found') }}" class="action-card found-card">
+                <div class="card-icon">🟢</div>
+                <h2>Report Found Item</h2>
+                <p>Report an item you found</p>
+            </a>
+            
+            <a href="{{ url_for('browse_items') }}" class="action-card browse-card">
+                <div class="card-icon">🔍</div>
+                <h2>Browse Items</h2>
+                <p>View all approved items</p>
+            </a>
+        </div>
+        
+        <div class="items-section">
+            <h2>My Reported Items</h2>
+            {% if items %}
+                <div class="items-grid">
+                    {% for item in items %}
+                        <div class="item-card status-{{ item.status }}">
+                            <div class="item-header">
+                                <span class="item-type">{{ item.type|upper }}</span>
+                                <span class="item-status status-{{ item.status }}">{{ item.status|upper }}</span>
+                            </div>
+                            <h3>{{ item.item_name }}</h3>
+                            <div class="item-details">
+                                <p><strong>Color:</strong> {{ item.color }}</p>
+                                <p><strong>Location:</strong> {{ item.location }}</p>
+                                {% if item.description %}
+                                    <p><strong>Description:</strong> {{ item.description }}</p>
+                                {% endif %}
+                                <p><strong>Date:</strong> {{ item.date }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="no-items">No items reported yet. Start by reporting a lost or found item!</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
+

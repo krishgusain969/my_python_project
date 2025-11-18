@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost & Found Portal - Campus</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-card">
+            <h1 class="main-title">🔍 Lost & Found Portal</h1>
+            <p class="subtitle">Campus Item Recovery System</p>
+            
+            <div class="options-grid">
+                <a href="{{ url_for('login') }}" class="option-card">
+                    <div class="card-icon">👤</div>
+                    <h2>User Login</h2>
+                    <p>Access your account to report or find items</p>
+                </a>
+                
+                <a href="{{ url_for('signup') }}" class="option-card">
+                    <div class="card-icon">✨</div>
+                    <h2>Sign Up</h2>
+                    <p>Create a new account to get started</p>
+                </a>
+                
+                <a href="{{ url_for('admin_login') }}" class="option-card admin-card">
+                    <div class="card-icon">🛡️</div>
+                    <h2>Admin Login</h2>
+                    <p>Administrator access to approve items</p>
+                </a>
+            </div>
+            
+            <div class="features">
+                <h3>Features:</h3>
+                <ul>
+                    <li>Report lost items</li>
+                    <li>Report found items</li>
+                    <li>Browse approved items</li>
+                    <li>Admin approval system</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

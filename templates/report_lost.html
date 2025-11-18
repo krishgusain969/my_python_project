@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Lost Item - Lost & Found Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="form-card">
+            <h1 class="page-title">🔴 Report Lost Item</h1>
+            <p class="form-subtitle">Report an item you've lost. Provide details to help others identify it.</p>
+            
+            <form method="POST" class="report-form">
+                <div class="form-group">
+                    <label for="item_name">What did you lose? *</label>
+                    <input type="text" id="item_name" name="item_name" placeholder="e.g., Wallet, Phone, Keys, Bag" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="color">Color *</label>
+                    <input type="text" id="color" name="color" placeholder="e.g., Black, Red, Blue, Multi-color" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">Where did you lose it? *</label>
+                    <input type="text" id="location" name="location" placeholder="e.g., Library, Cafeteria, Building A, Room 101" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Additional Description</label>
+                    <textarea id="description" name="description" rows="4" placeholder="Any additional details about the item (brand, size, condition, distinguishing features, etc.)"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Submit Report</button>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+

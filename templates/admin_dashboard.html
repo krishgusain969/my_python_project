@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Lost & Found Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard-header">
+            <h1>Admin Dashboard 🛡️</h1>
+            <div>
+                <span class="admin-badge">Admin: {{ username }}</span>
+                <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+            </div>
+        </div>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="admin-stats">
+            <div class="stat-card">
+                <h3>{{ pending_items|length }}</h3>
+                <p>Pending Items</p>
+            </div>
+            <div class="stat-card">
+                <h3>{{ all_items|length }}</h3>
+                <p>Total Items</p>
+            </div>
+        </div>
+        
+        <div class="items-section">
+            <h2>Pending Items (Awaiting Approval)</h2>
+            {% if pending_items %}
+                <div class="items-grid">
+                    {% for item in pending_items %}
+                        <div class="item-card admin-item-card">
+                            <div class="item-header">
+                                <span class="item-type">{{ item.type|upper }}</span>
+                                <span class="item-status status-{{ item.status }}">{{ item.status|upper }}</span>
+                            </div>
+                            <h3>{{ item.item_name }}</h3>
+                            <div class="item-details">
+                                <p><strong>Color:</strong> {{ item.color }}</p>
+                                <p><strong>Location:</strong> {{ item.location }}</p>
+                                {% if item.description %}
+                                    <p><strong>Description:</strong> {{ item.description }}</p>
+                                {% endif %}
+                                <p><strong>Reported by:</strong> {{ item.reported_by }}</p>
+                                <p><strong>Date:</strong> {{ item.date }}</p>
+                            </div>
+                            <div class="admin-actions">
+                                <a href="{{ url_for('approve_item', item_id=item.id) }}" class="btn btn-success">✓ Approve</a>
+                                <a href="{{ url_for('reject_item', item_id=item.id) }}" class="btn btn-danger">✗ Reject</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="no-items">No pending items. All items have been reviewed!</p>
+            {% endif %}
+        </div>
+        
+        <div class="items-section">
+            <h2>All Items</h2>
+            {% if all_items %}
+                <div class="items-grid">
+                    {% for item in all_items %}
+                        <div class="item-card status-{{ item.status }}">
+                            <div class="item-header">
+                                <span class="item-type">{{ item.type|upper }}</span>
+                                <span class="item-status status-{{ item.status }}">{{ item.status|upper }}</span>
+                            </div>
+                            <h3>{{ item.item_name }}</h3>
+                            <div class="item-details">
+                                <p><strong>Color:</strong> {{ item.color }}</p>
+                                <p><strong>Location:</strong> {{ item.location }}</p>
+                                {% if item.description %}
+                                    <p><strong>Description:</strong> {{ item.description }}</p>
+                                {% endif %}
+                                <p><strong>Reported by:</strong> {{ item.reported_by }}</p>
+                                <p><strong>Date:</strong> {{ item.date }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="no-items">No items in the system yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
+
