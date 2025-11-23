@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
     <div class="container">
         <div class="form-card">
             <h1 class="page-title">🔴 Report Lost Item</h1>
@@ -16,6 +17,18 @@
                 <div class="form-group">
                     <label for="item_name">What did you lose? *</label>
                     <input type="text" id="item_name" name="item_name" placeholder="e.g., Wallet, Phone, Keys, Bag" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">Category *</label>
+                    <select id="category" name="category" required>
+                        <option value="electronics">Electronics</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="documents">Documents</option>
+                        <option value="books">Books</option>
+                        <option value="other">Other</option>
+                    </select>
                 </div>
                 
                 <div class="form-group">
@@ -31,6 +44,11 @@
                 <div class="form-group">
                     <label for="description">Additional Description</label>
                     <textarea id="description" name="description" rows="4" placeholder="Any additional details about the item (brand, size, condition, distinguishing features, etc.)"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact">Contact Information (Optional)</label>
+                    <input type="text" id="contact" name="contact" placeholder="Email or phone number for contact">
                 </div>
                 
                 <div class="form-actions">

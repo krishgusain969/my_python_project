@@ -7,10 +7,35 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
     <div class="container">
         <div class="dashboard-header">
             <h1>Browse Approved Items 🔍</h1>
             <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">← Back to Dashboard</a>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" id="real-time-search" class="search-input" placeholder="🔍 Search items by name, color, location..." value="{{ search_query }}">
+        </div>
+        
+        <div class="filters-container">
+            <div class="filter-group">
+                <label>Type:</label>
+                <select id="filter-type" onchange="window.location.href='{{ url_for('browse_items') }}?type=' + this.value + '&category={{ category }}&search={{ search_query }}'">
+                    <option value="all" {% if filter_type == 'all' %}selected{% endif %}>All</option>
+                    <option value="lost" {% if filter_type == 'lost' %}selected{% endif %}>Lost</option>
+                    <option value="found" {% if filter_type == 'found' %}selected{% endif %}>Found</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Category:</label>
+                <select id="filter-category" onchange="window.location.href='{{ url_for('browse_items') }}?type={{ filter_type }}&category=' + this.value + '&search={{ search_query }}'">
+                    <option value="all" {% if category == 'all' %}selected{% endif %}>All</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat }}" {% if category == cat %}selected{% endif %}>{{ cat|title }}</option>
+                    {% endfor %}
+                </select>
+            </div>
         </div>
         
         {% if items %}
@@ -23,12 +48,20 @@
                         </div>
                         <h3>{{ item.item_name }}</h3>
                         <div class="item-details">
+                            {% if item.category %}
+                                <span class="category-badge">{{ item.category|title }}</span>
+                            {% endif %}
                             <p><strong>Color:</strong> {{ item.color }}</p>
                             <p><strong>Location:</strong> {{ item.location }}</p>
                             {% if item.description %}
                                 <p><strong>Description:</strong> {{ item.description }}</p>
                             {% endif %}
                             <p><strong>Reported by:</strong> {{ item.reported_by }}</p>
+                            {% if item.contact %}
+                                <div class="contact-info">
+                                    <strong>Contact:</strong> {{ item.contact }}
+                                </div>
+                            {% endif %}
                             <p><strong>Date:</strong> {{ item.date }}</p>
                         </div>
                     </div>
